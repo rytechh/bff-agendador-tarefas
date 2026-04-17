@@ -13,8 +13,7 @@ public class EmailService {
     private final EmailClient emailClient;
 
 
-    public TarefasDTOResponse enviaEmail(TarefasDTOResponse dto) {
-        return emailClient.enviarEmail(dto);
-
+    public void enviaEmail(TarefasDTOResponse dto) {
+        emailClient.enviarEmail(dto);
     }
 }
