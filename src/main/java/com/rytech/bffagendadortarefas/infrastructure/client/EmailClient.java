@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface EmailClient {
 
     @PostMapping
-    TarefasDTOResponse enviarEmail(@RequestBody TarefasDTOResponse dto);
+    void enviarEmail(@RequestBody TarefasDTOResponse dto);
 }
