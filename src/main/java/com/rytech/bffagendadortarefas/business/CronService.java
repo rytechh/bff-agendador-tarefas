@@ -28,7 +28,6 @@ public class CronService {
     private String senha;
 
 
-
     @Scheduled(cron = "${cron.horario}")
     public void buscaTarefasProximaHora() {
         String token = login(converterParaRequestDTO());
