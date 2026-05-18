@@ -8,6 +8,7 @@ import com.rytech.bffagendadortarefas.business.dto.in.UsuarioDTORequest;
 import com.rytech.bffagendadortarefas.business.dto.out.EnderecoDTOResponse;
 import com.rytech.bffagendadortarefas.business.dto.out.TelefoneDTOResponse;
 import com.rytech.bffagendadortarefas.business.dto.out.UsuarioDTOResponse;
+import com.rytech.bffagendadortarefas.business.dto.out.ViaCepDTOResponse;
 import com.rytech.bffagendadortarefas.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -121,13 +122,25 @@ public class UsuarioController {
 
     @PostMapping("/telefone")
     @Operation(summary = "Salva Telefone de Usuários", description = "Salva telefone para usuários")
-    @ApiResponse(responseCode = "200", description = "Telefone atualizado com sucesso")
+    @ApiResponse(responseCode = "200", description = "Telefone salvo com sucesso")
     @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     public ResponseEntity<TelefoneDTOResponse> cadastraTelefone(@RequestBody TelefoneDTORequest dto,
                                                                 @RequestHeader(name = "Authorization", required = false) String token) {
         return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
+    }
+
+
+    @GetMapping("/endereco/{cep}")
+    @Operation(summary = "Buscar endereço via cep",
+            description = "Busca dados de endereço recebendo um cep")
+    @ApiResponse(responseCode = "200", description = "Dados de endereço retornados com sucesso")
+    @ApiResponse(responseCode = "400", description = "CEP não encontrado")
+    @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    public ResponseEntity<ViaCepDTOResponse> buscarEndereco(@PathVariable ("cep") String cep) {
+
+        return ResponseEntity.ok(usuarioService.buscarEnderecoPorCep(cep));
     }
 
 }
