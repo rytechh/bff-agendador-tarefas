@@ -16,28 +16,32 @@ public class FeignError implements ErrorDecoder {
 
         String mensagemErro = mensagemErro(response);
 
+
+        String erroResponse = "erro";
+
         switch (response.status()) {
             case 409:
-                return new ConflictException("Erro: " + mensagemErro);
+                return new ConflictException(erroResponse + mensagemErro);
             case 403:
-                return new ResourceNotFoundException("Erro: " + mensagemErro);
+                return new ResourceNotFoundException(erroResponse + mensagemErro);
             case 401:
-                return new UnauthorizedException("Erro: " + mensagemErro);
+                return new UnauthorizedException(erroResponse + mensagemErro);
             case 400:
-                return new IllegalArgumentsException("Erro: " + mensagemErro);
+                return new IllegalArgumentsException(erroResponse + mensagemErro);
             default:
-                return new BusinessException("Erro: " + mensagemErro);
+                return new BusinessException(erroResponse + mensagemErro);
         }
     }
 
-    private String mensagemErro(Response response){
+    private String mensagemErro(Response response) {
         try {
-            if(Objects.isNull(response.body())){
+            if (Objects.isNull(response.body())) {
                 return "";
             }
-             return new String(response.body().asInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            return new String(response.body().asInputStream().readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            return "Erro desconhecido na comunicação com o serviço externo";
         }
     }
 }
