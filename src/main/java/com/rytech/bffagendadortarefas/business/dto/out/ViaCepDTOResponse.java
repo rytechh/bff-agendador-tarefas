@@ -8,17 +8,17 @@ import lombok.*;
 @Getter
 @Builder
 public class ViaCepDTOResponse {
-    public String cep;
-    public String logradouro;
-    public String complemento;
-    public String unidade;
-    public String bairro;
-    public String localidade;
-    public String uf;
-    public String estado;
-    public String regiao;
-    public String ibge;
-    public String gia;
-    public String ddd;
-    public String siafi;
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String unidade;
+    private String bairro;
+    private String localidade;
+    private String uf;
+    private String estado;
+    private String regiao;
+    private String ibge;
+    private String gia;
+    private String ddd;
+    private String siafi;
 }
