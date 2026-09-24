@@ -32,6 +32,9 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
+        env:
+          EMAIL_USERNAME: ${{ secrets.MAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.MAIL_PASS }}
         run: mvn -B package --file pom.xml
 
        # - name: Run tests

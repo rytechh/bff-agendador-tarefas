@@ -3,6 +3,7 @@ package com.rytech.bffagendadortarefas.business;
 import com.rytech.bffagendadortarefas.business.dto.in.LoginRequestDTO;
 import com.rytech.bffagendadortarefas.business.dto.out.TarefasDTOResponse;
 import com.rytech.bffagendadortarefas.business.enums.StatusNotificacaoEnum;
+import com.rytech.bffagendadortarefas.infrastructure.message.producer.EmailProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,7 @@ import java.util.List;
 public class CronService {
 
     private final TarefasService tarefasService;
-    private final EmailService emailService;
+    private final EmailProducer emailProducer;
     private final UsuarioService usuarioService;
 
     @Value("${usuario.email}")
@@ -40,9 +41,9 @@ public class CronService {
                 horaFutura, token);
         log.info("Tarefas encontradas: " + listaTarefas);
         listaTarefas.forEach(tarefas -> {
-            emailService.enviaEmail(tarefas);
+            emailProducer.enviarEmail(tarefas);
             log.info("Email enviado para o usuario: " + tarefas.getEmailUsuario());
-            tarefasService.alteraStatus(StatusNotificacaoEnum.NOTIFICADO, tarefas.getId(),
+            tarefasService.alteraStatus(StatusNotificacaoEnum.AGUARDANDO, tarefas.getId(),
                     token);
         });
         log.info("Finalizadas a busca e notificação de tarefas");
